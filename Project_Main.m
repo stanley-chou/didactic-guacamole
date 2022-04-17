@@ -44,25 +44,24 @@ ylabel("|H(w)|")
 %Question 5  , stuff we are not so sure of
 
 
-% %sound(v,Fs);
-% [a,g] = lpc(y,30);
-% ar = filter(a,1,y);
-% figure()
-% %plot(length(ar),ar);
-% stem(ar);
-% figure()
-% %plot(length(y),y);
-% stem(y);
-% figure()
-% %plot(length(y),y);
-% stem(v);
-% [cepstrum,recon] = rceps(y);
-% figure()
-% semilogy(abs(recon));
+%sound(v,Fs);
+[a,g] = lpc(y,30);
+ar = filter(a,1,y);
+figure(51)
+%plot(length(ar),ar);
+stem(ar);
+figure(52)
+%plot(length(y),y);
+stem(y);
+figure(53)
+plot(length(y),y);
+stem(v);
+[cepstrum,recon] = rceps(y);
+figure(54)
+semilogy(abs(recon));
 
 %Anis' edits:
-%Isn't the above to generate an AR signal? I'm not sure, but we should
-%discuss further.
+
 %I'll leave my suggestions as comments for now. 
 [a,g] = lpc(y,30);
 ar = filter(a,1,y);
