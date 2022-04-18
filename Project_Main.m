@@ -25,7 +25,8 @@ end
 
 %Question 3
 
-y1 = abs(fft(xcorr(y,30)));
+%y1 = abs(fft(xcorr(y,30)));
+y1 = abs(fft(xcorr(y,y)));
 figure(1)
 stem(y1);
 title('auto correlation of y(n)');
@@ -45,49 +46,67 @@ ylabel("|H(w)|")
 
 
 %sound(v,Fs);
-[a,g] = lpc(y,30);
-ar = filter(a,1,y);
-figure(51)
-%plot(length(ar),ar);
-stem(ar);
-figure(52)
-%plot(length(y),y);
-stem(y);
-figure(53)
-plot(length(y),y);
-stem(v);
+[a,g] = lpc(y,30); %getting 30 AR coefficients for the funciton
+
+%[a,g] = lpc(v,30); Paul said to try using V for better results
+
+% Question6
+
+ar = filter(a,1,y); % y(n) = voice*ARfilter
+%ar = filter(a,1,v); % y(n) = voice*ARfilter, maybe look at v
+ARw = fft(ar, length(v))
+frequencies = linspace(0,Fs,length(v));
+figure(3)
+plot(frequencies, abs(ARw));
+hold on
+plot(frequencies, abs(fft(y,length(v))));
+hold off
+
+ 
+% [d1,p1] = aryule(ar,30);
+% [H1,w1] = freqz(p1,d1);
+% figure(7)
+% plot(w1,H1);
+
+title('magnitude squared of y(n)');
+xlabel("omega")
+ylabel("|H(w)|")
+
+% Question 7
+%formants are equal to the roots of A 
+formants = roots(a);
+
+
+%Question 8
+%method 1
+f0 = pitch(y,Fs);
+pitchPeriod = Fs/(mean(f0)); %might be more accurate to choose the most common occurring value
+
+% method 2
+
 [cepstrum,recon] = rceps(y);
-figure(54)
+figure(4)
 semilogy(abs(recon));
-
-%Anis' edits:
-
-%I'll leave my suggestions as comments for now. 
-[a,g] = lpc(y,30);
-ar = filter(a,1,y);
-[d1,p1] = aryule(ar,7);
-[H1,w1] = freqz(p1,d1);
-plot(w1,H1);
-title('magnitude squared of y(n)');
-xlabel("omega")
-ylabel("|H(w)|")
-
-%Question 6, need to double check this
-figure(3);
-plot(length(ar),ar);
-stem(ar);
-
-%Question 7, 
-figure(4);
-plot(w1,H1);
-title('magnitude squared of y(n)');
-xlabel("omega")
-ylabel("|H(w)|")
-
-
-%Question 8, copied from original code, looks good. 
-[cepstrum,recon] = rceps(y);
 figure(5)
-semilogy(abs(recon));
+semilogx(abs(recon));
+%method1 get 110,250
+%method2 get 111,860
 
 
+
+%Question 9
+
+
+%Question 10
+
+%number how many segments do you want to break the signal into x segments
+%of equal amount samples
+
+%for each individual segment take an independent AR coefficient set, take the LPC
+
+%Then create an impulse train from 1 spaced equally btwn pitch period
+% impulse = 
+
+%take each LPC segment and their a and convolve with the impulse function
+% then put them all together
+% and play them.
