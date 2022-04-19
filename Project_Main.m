@@ -249,7 +249,12 @@ intraClass2 = eucDistance(class2)
 
 interClassDistance = eucDistance(interclass)
 
+
 %Question 10
+
+recreated = recreater(v,Fs, 100, 110250);
+
+soundsc(recreated,Fs);
 
 %number how many segments do you want to break the signal into x segments
 %of equal amount samples
