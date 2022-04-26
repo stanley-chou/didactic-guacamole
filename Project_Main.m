@@ -18,18 +18,13 @@ for n= 2:length(v)
     y(n) = v(n) - c*v(n-1);
 end
 
-%Prove that the above pre-emphasis step emphasizes high frequencies.
-%In this case, we are interested in 
-
-
 
 %Question 3
 
-%y1 = abs(fft(xcorr(y,30)));
 y1 = abs(fft(xcorr(y,y)));
 figure(1)
 stem(y1);
-title('DFt of auto correlation of y(n)');
+title('DFT of auto correlation of y(n)');
 xlabel("omega")
 ylabel("|H(w)|")
 
@@ -42,18 +37,14 @@ title('DFT of the magnitude squared of y(n)');
 xlabel("omega")
 ylabel("|H(w)|")
 
-%Question 5  , stuff we are not so sure of
+%Question 5  
 
 
-%sound(v,Fs);
 [a,g] = lpc(y,30); %getting 30 AR coefficients for the funciton
-
-%[a,g] = lpc(v,30); Might try using V for better results
 
 % Question6
 
 ar = filter(1,a,y); % y(n) = voice*ARfilter
-%ar = filter(a,1,v); % y(n) = voice*ARfilter, maybe look at v
 
 ARw = fft(ar, length(v));
 frequencies = linspace(0,Fs,length(v));
@@ -86,20 +77,46 @@ formants = roots(a);
 %Question 8
 %method 1
 f0 = pitch(y,Fs);
-pitchPeriod = Fs/(mean(f0)); %might be more accurate to choose the most common occurring value
 
+[femalev,femaleFs] = audioread('Female_Voice.wav');
+
+femalev = femalev(:,1);
+femaley = femalev;
+c = 0.98;
+
+for n= 2:length(femalev)
+    femaley(n) = femalev(n) - c*femalev(n-1);
+end
+
+
+femalef0 = pitch(femaley,femaleFs);
+[otherv,otherFs] = audioread('poggers.wav');
+otherv = otherv(:,1);
+othery = otherv;
+c = 0.98;
+
+for n= 2:length(otherv)
+    othery(n) = otherv(n) - c*otherv(n-1);
+end
+otherf0 = pitch(othery,otherFs);
+
+figure()
+stem(femalef0);
+title("pitch of female voice");
+figure()
+stem(f0);
+title("pitch of voice sample");
+figure()
+stem(otherf0);
+title("pitch of other male voice");
 % method 2
 
-
 [cepstrum,recon] = rceps(y);
-figure(7)
+figure()
 
 semilogy(abs(recon));
 title('cepstrum of pre-emphasized voice y(n)')
-figure(8)
 
-semilogx(abs(recon));
-title('cepstrum semilogx of pre-emphasized voice y(n)')
 %method1 get 110,250
 %method2 get 111,860
 %Noah's voice gets 149,784
@@ -156,9 +173,9 @@ interClassDistance = eucDistance(interclass)
 %Noah Voice
 [v,Fs] = audioread('poggers.wav');
 y  = preEmphasis(v);
-y = y(43504:81673);
-figure(10);
-plot(y);
+y = y(27297:57187);
+% figure(10);
+% plot(y);
 numberof = (length(y)/380);
 splits = floor(numberof);
 recreated = recreater(y,Fs, splits, 380);
@@ -177,8 +194,8 @@ y  = preEmphasis(v);
 f02 = pitch(y,Fs);
 pitchPeriod2 = floor(Fs/(mode(f02)));
 y = y(4241:30425);
-figure(11);
-plot(y);
+% figure(11);
+% plot(y);
 numberof = (length(y)/373);
 splits = ceil(numberof);
 recreated = recreater(y,Fs, splits, 373);
