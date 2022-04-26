@@ -168,6 +168,10 @@ intraClass2 = eucDistance(class2)
 
 interClassDistance = eucDistance(interclass)
 
+cosintraClass1 = cosDistance(class1)
+cosintraClass2 = cosDistance(class2)
+
+cosinterClassDistance = cosDistance(interclass)
 
 %Question 10
 %Noah Voice
