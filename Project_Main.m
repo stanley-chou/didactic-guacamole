@@ -192,6 +192,9 @@ cosinterClassDistance = cosDistance(interclass)
 y  = preEmphasis(v);
 figure(10);
 plot(y);
+title("Noam Poggers")
+xlabel("sample number")
+ylabel("amplitude")
 y = y(4701:57553);
 
 numberof = (length(y)/380);
