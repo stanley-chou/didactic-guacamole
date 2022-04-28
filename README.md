@@ -14,7 +14,7 @@ the order is first the original voice, then the recreated voice, and then the re
 Noam Hirschorn speaks first, followed by Stanley Chou
 
 .wav files are all sample voice clips used in the project
-Not all the voice files used are in this repo, if you want more examples just ask.
+Not all the voice files used are in this repository, if you want more examples just ask.
 
 
 Functions:
@@ -23,7 +23,7 @@ recreater.m and voiceslice.m recreate speech based on the input values for recre
 eucDistance.m calculates the average Euclidian distance of the vectors given to it.
 cosDistance.m calculates the average cos similarity of the vectors given to it.
 
-Thank you for taking the time to view our DSP Final Project! Group 15 wishes you a wonderful day.
+Thank you for taking the time to view our DSP Final Project! Group 15 wishes you a wonderful day!
 
 
 
